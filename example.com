@@ -1,4 +1,9 @@
 # nginx config serving Django site on `https://example.com`
+# Copy me to /etc/nginx/sites-available and run
+# cd /etc/nginx/sites-enabled && sudo ln -s ../sites-available/example.com
+# To obtain SSL certificate, run
+# sudo certbot certonly -d example.com --webroot -w /var/www/acme-challenge/example.com
+# while the first `server` section is active in nginx and the second `server` section is commented out
 server {
         listen 80;
 	listen [::]:80;
@@ -18,7 +23,6 @@ server {
 	rewrite ^/.well-known/acme-challenge/ $request_uri last;
 	rewrite ^ https://example.com$request_uri?;
 }
-
 server {
 	listen 443 ssl;
 	listen [::]:443 ssl;
