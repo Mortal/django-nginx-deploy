@@ -1,0 +1,15 @@
+# systemd service file for serving APPNAME on example.com
+# Copy me to /etc/systemd/system and run
+# sudo systemctl daemon-reload && sudo systemctl enable APPNAME-gunicorn && sudo systemctl start APPNAME-gunicorn
+[Unit]
+Description=APPNAME
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/example.com
+ExecStart=/var/www/example.com/venv/bin/gunicorn --workers 3 --bind 127.0.0.1:14723 APPNAME.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
